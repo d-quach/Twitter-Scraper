@@ -14,8 +14,8 @@ pip install all of the required libraries.
   
 Here are a few screenshots of the current version:  
 
-![Options Menu](https://i.imgur.com/is4GfwA.png)
+![Options Menu](https://i.imgur.com/e4ZAQO9.png)
 
-![Searching Recent Tweets](https://i.imgur.com/k8Ee5Pn.png)
+![Searching Recent Tweets](https://i.imgur.com/KpuwaQl.png)
 
-![Account Engagement](https://i.imgur.com/JEekTrN.png)
+![Account Engagement](https://i.imgur.com/aY3yT3Q.png)
