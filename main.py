@@ -30,36 +30,44 @@ class TwitterClient:
     def display_menu(self):
         """Displays menu options and loops until exit"""
         user_input = None
-        valid_inputs = np.array(['1', '2', 'q'])
+        valid_inputs = np.array(['1', '2', '3', 'q'])
 
         while user_input != 'q':
 
             print('***************  Twitter Miner  ***************')
             print(
                 f'{"****  Option":<16}{"Action    ****":>31}\n{"*" * 47}\n{"*" * 4:<11}1'
-                f'{"Search recent tweets  ***":>35}\n'
-                f'{"*" * 4: <11}2{"Account Analytics  ***":>35}\n{"*" * 4: <11}q{"Quit  ***":>35}\n'
+                f'{"Search Recent Tweets  ***":>35}\n'
+                f'{"*" * 4: <11}2{"Account Analytics  ***":>35}\n'
+                f'{"*" * 4: <11}3{"Search For a User  ***":>35}\n'
+                f'{"*" * 4: <11}q{" Quit  ***":>35}\n'
+                
                 f'{"*" * 47}\n')
 
-            user_input = input('Enter an option: ')
+            user_input = input('Enter an Option: ')
 
             if user_input not in valid_inputs:
-                print('\nPlease enter a valid option\n')
+                print('\nPlease Enter a Valid Option\n')
 
             elif user_input == '1':
-                search_string = input('Enter your search: ')
+                search_string = input('Enter Your Search: ')
                 tweets = self.search_recent_tweets(search_string)
                 self.print_searched_tweets(tweets)
 
             elif user_input == '2':
-                get_account = input('Which account needs to be analyzed? ')
-                amount = int(input('Specify the number of tweets to sample: '))
+                get_account = input('Which Account Needs to Be Analyzed? ')
+                amount = int(input('Specify the Number of Tweets to Sample: '))
 
                 df = self.get_user_tweets(get_account, amount)
                 self.tweet_performance(df)
 
+            elif user_input == '3':
+                search_user = input('Which Twitter User Would You Like to Look Up? ')
+                twitter_user = self.get_user(search_user)
+                self.print_user(twitter_user)
+
             elif user_input == 'q':
-                print('Thank you, have a good day.\n')
+                print('Thank you, Have a Good Day.\n')
                 break
 
     def search_recent_tweets(self, line):
@@ -68,7 +76,7 @@ class TwitterClient:
             searched_tweets = np.array(self.clientAPI.search(q=line, count=20, tweet_mode='extended'))
             return searched_tweets
         except Exception:
-            print("There has been an error in the search.")
+            print("There Has Been an Error in the Search.")
 
     @staticmethod
     def print_searched_tweets(tweets):
@@ -83,9 +91,9 @@ class TwitterClient:
                 if 'en' in tweet.lang:
                     try:
                         tweet_text = tweet.retweeted_status.full_text
-                        print(f'Tweet body: {p.clean(tweet_text)}')
+                        print(f'Tweet Body: {p.clean(tweet_text)}')
                     except AttributeError:
-                        print(f'Tweet body: {p.clean(tweet.full_text)}')
+                        print(f'Tweet Body: {p.clean(tweet.full_text)}')
                 else:
                     try:
                         tweet_text = tweet.retweeted_status.full_text
@@ -102,13 +110,13 @@ class TwitterClient:
                     print(f'Location: {tweet.user.location}')
 
                 try:
-                    print(f'Like count: {tweet.retweeted_status.favorite_count}')
-                    print(f'Retweet count: {tweet.retweeted_status.retweet_count}\n')
+                    print(f'Like Count: {tweet.retweeted_status.favorite_count}')
+                    print(f'Retweet Count: {tweet.retweeted_status.retweet_count}\n')
                 except AttributeError:
-                    print(f'Like count: {tweet.favorite_count}')
-                    print(f'Retweet count: {tweet.retweet_count}\n')
+                    print(f'Like Count: {tweet.favorite_count}')
+                    print(f'Retweet Count: {tweet.retweet_count}\n')
         except Exception:
-            print("There has been an error in the search.\n")
+            print("There Has Been an Error in the Search.\n")
 
     def get_user_tweets(self, account, amount):
         """Get the tweets from a user's timeline"""
@@ -129,7 +137,7 @@ class TwitterClient:
             tweet_df.index = ['Screen Name', 'Tweet', 'Like Count', 'Retweet Count']
             return tweet_df
         except Exception:
-            print("There has been an error in the search.")
+            print("There Has Been an Error in the Search.")
 
     @staticmethod
     def tweet_performance(df):
@@ -154,6 +162,26 @@ class TwitterClient:
                   f'\n\n')
         except Exception:
             print("There has been an error in the search.")
+
+    def get_user(self, search_user):
+        """Get information about a twitter user"""
+        try:
+            twitter_user = self.clientAPI.get_user(search_user)
+            return twitter_user
+        except Exception:
+            print("There Has Been an Error in the Search.")
+
+    @staticmethod
+    def print_user(found_user):
+        print(f'\n'f'Screen Name: {found_user.screen_name}\n'
+              f'Name: {found_user.name}\n'
+              f'ID: {found_user.id}\n'
+              f'Location: {found_user.location}\n'
+              f'Date Created: {found_user.created_at}\n'
+              f'Description: {found_user.description}\n'
+              f'Is Verified? {found_user.verified}\n'
+              f'Is This Account Protected? {found_user.protected}\n'
+              f'URL: {found_user.url}\n\n')
 
 
 if __name__ == '__main__':
