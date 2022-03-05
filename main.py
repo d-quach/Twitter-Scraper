@@ -1,10 +1,10 @@
 """A Twitter Data miner using the Tweepy API"""
 import keys
-import tweepy  # pip install tweepy
-from textblob import TextBlob  # pip install -U textblob
-import pandas as pd  # pip install pandas
-import numpy as np  # pip install numpy
-import preprocessor as p  # pip install tweet-preprocessor
+import tweepy  # py pip -m install tweepy
+from textblob import TextBlob  # py pip -m install -U textblob
+import pandas as pd  # py pip -m install pandas
+import numpy as np  # py pip -m install numpy
+import preprocessor as p  # py pip -m install tweet-preprocessor
 
 
 class Authenticator:

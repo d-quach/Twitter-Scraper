@@ -1,3 +1,5 @@
+***Update 2022-03-4***: This program is compatible with Python 3.9. After updating to Python 3.10.2 I noticed that there must have been some new changes to the tweepy API and will have to update it later.
+
 A simple terminal program built for one of my classes. Time constraints limited the scope to two functions from the Twitter API.  
 
 One method will search all recent tweets for a given term. This will display tweets with some extra information. It can be helpful for gathering intelligence. The additional metadata can help distinguish real people from the bots. It is up to the user to determine the credibility of any information that they find.  
